@@ -1,4 +1,10 @@
 # Knowledge Base
 
 This repository contains UML diagrams on the following topics:
-* Java Hierarchies of Classes
+* [SOLID Principles](./solid/README.md#solid-principles)
+  * [Single Responsibility](./solid/README.md#single-responsibility)
+  * [Open / Closed](./solid/README.md#open--closed)
+  * [Liskov Substitution](./solid/README.md#liskov-substitution)
+  * [Interface Segregation](./solid/README.md#interface-segregation)
+  * [Dependency Inversion](./solid/README.md#dependency-inversion)
+

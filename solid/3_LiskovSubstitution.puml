@@ -1,0 +1,28 @@
+@startuml
+title SOLID: Liskov Substitution
+
+skinparam class {
+    BackgroundColor strategy
+}
+
+legend top
+    Subtypes must be substitutable for their base types.
+end legend
+
+interface BookRepository {
+    + save(book: Book): Book
+    + getById(id: string): Book
+}
+
+class BookService {
+    - repository: BookRepository
+    + constructor(repository: BookRepository)
+    + create(book: Book): void
+}
+
+BookService -> BookRepository
+
+class SqlBookRepository implements BookRepository
+class InMemoryBookRepository implements BookRepository
+
+@enduml

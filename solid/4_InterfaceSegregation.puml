@@ -1,0 +1,26 @@
+@startuml
+
+title SOLID: Interface Segregation
+
+skinparam class {
+    BackgroundColor strategy
+}
+
+legend top
+    Implements only what it needs via small, focused interfaces.
+end legend
+
+interface BookReader {
+    + getById(id: string): Book
+}
+
+interface BookEditor {
+    + save(book: Book): Book
+}
+
+class BookManager
+
+BookReader <|.. BookManager
+BookEditor <|.. BookManager
+
+@enduml

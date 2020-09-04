@@ -1,0 +1,27 @@
+@startuml
+
+title SOLID: Dependency Inversion
+
+skinparam class {
+    BackgroundColor strategy
+}
+
+legend top
+    Depend on abstractions, not on concrete implementations.
+end legend
+
+interface BookRepository {
+    + save(book: Book): Book
+    + getById(id: string): Book
+}
+
+class BookService {
+    - repository: BookRepository
+    + constructor(repository: BookRepository)
+    + create(book: Book): void
+}
+
+BookRepository <|.. JpaBookRepository
+BookService -right-> BookRepository
+
+@enduml

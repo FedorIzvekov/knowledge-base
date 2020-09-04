@@ -1,0 +1,46 @@
+@startuml
+
+title SOLID: Single Responsibility
+
+skinparam class {
+    BackgroundColor strategy
+}
+
+legend top
+  Each class should have ONE responsibility.
+end legend
+
+class Book {
+    - title: string
+    - author: string
+    - content: string
+    + getters()/setters()
+}
+
+class BookService {
+    - repository: BookRepository
+    + constructor(repository: BookRepository)
+    + create(book: Book): void
+}
+
+class BookRepository {
+    + save(book: Book): Book
+    + getById(): Book
+}
+
+BookService -left-> Book
+BookService -right-> BookRepository
+
+note top of Book
+    Only for entity data
+end note
+
+note top of BookRepository
+    Only for data storage operations
+end note
+
+note top of BookService
+    Only business logic
+end note
+
+@enduml

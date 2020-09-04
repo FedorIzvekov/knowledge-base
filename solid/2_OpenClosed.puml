@@ -1,0 +1,21 @@
+@startuml
+
+title SOLID: Open/Closed
+
+skinparam class {
+    BackgroundColor strategy
+}
+
+legend top
+    Code should be open for extension,
+    but closed for modification of existing logic.
+end legend
+
+interface BookReader {
+    + read(book: Book): string
+}
+
+TextBookReader .up.|> BookReader
+PdfBookReader .up.|> BookReader
+
+@enduml
