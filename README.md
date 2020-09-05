@@ -8,3 +8,5 @@ This repository contains UML diagrams on the following topics:
   * [Interface Segregation](./solid/README.md#interface-segregation)
   * [Dependency Inversion](./solid/README.md#dependency-inversion)
 
+* [Networks](./networks/README.md#networks)
+  * [OSI vs TCP/IP Model Mapping](./networks/README.md#osi-vs-tcpip-model-mapping)

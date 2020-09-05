@@ -1,0 +1,52 @@
+@startuml
+skinparam linetype ortho
+
+title OSI vs TCP/IP Model Mapping
+
+' OSI Layers
+rectangle "<b>7. Application Layer</b> \nHTTP, FTP, DNS, SMTP, \nSNMP, Telnet, POP3, IMAP" as osi7 #efc28f
+rectangle "<b>6. Presentation Layer</b> \nSSL, TLS, JPEG, MPEG" as osi6 #efc28f
+rectangle "<b>5. Session Layer</b> \nNetBIOS, RPC" as osi5 #efc28f
+rectangle "<b>4. Transport Layer</b> \nTCP, UDP, SCTP" as osi4 #d9ea62
+rectangle "<b>3. Network Layer</b> \nIP, ICMP, IGMP" as osi3 #77d5a2
+rectangle "<b>2. Data Link Layer</b> \nEthernet, PPP, MAC, ARP" as osi2 #4db4ff
+rectangle "<b>1. Physical Layer</b> \nCables, Hubs, Electrical signals, Wi-Fi, DSL" as osi1 #4db4ff
+
+' TCP/IP Layers
+rectangle "<b>4. Application Layer</b> \nHTTP, FTP, DNS, SMTP, \nSNMP, Telnet, POP3, IMAP \n\nSSL, TLS, JPEG, MPEG \n\nNetBIOS, RPC" as tcpip4 #e69d4c
+rectangle "<b>3. Transport Layer</b> \nTCP, UDP, SCTP" as tcpip3 #c8e11e
+rectangle "<b>2. Internet Layer</b> \nIP, ICMP, IGMP" as tcpip2 #3cc37a
+rectangle "<b>1. Network Access Layer</b> \nEthernet, PPP, MAC, ARP \nElectrical signals, Wi-Fi, DSL" as tcpip1 #0094ff
+
+' Data Units
+rectangle "Data" as data #ff6b00
+rectangle "Segment (TCP) \nDatagram (UDP/SCTP)" as segment #ff6b00
+rectangle "Packet" as packet #ff6b00
+rectangle "Frame" as frame #ff6b00
+rectangle "Bits" as bits #ff6b00
+
+' Connect levels
+osi7 <-down-> osi6
+osi6 <-down-> osi5
+osi5 <-down-> osi4
+osi4 <-down-> osi3
+osi3 <-down-> osi2
+osi2 <-down-> osi1
+
+tcpip4 <--down--> tcpip3
+tcpip3 <-down-> tcpip2
+tcpip2 <-down-> tcpip1
+
+' Map with lines
+osi7 <-right[dashed,#ff6b00]- data
+data -right[dashed,#ff6b00]-> tcpip4
+osi4 <-right[dashed,#ff6b00]- segment
+segment -right[dashed,#ff6b00]-> tcpip3
+osi3 <-right[dashed,#ff6b00]- packet
+packet -right[dashed,#ff6b00]-> tcpip2
+osi2 <-right[dashed,#ff6b00]- frame
+frame -right[dashed,#ff6b00]-> tcpip1
+osi1 <-right[dashed,#ff6b00]- bits
+bits -right[dashed,#ff6b00]-> tcpip1
+
+@enduml
