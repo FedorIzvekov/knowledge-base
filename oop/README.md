@@ -24,3 +24,5 @@
 
 <img src="./files/dependency_inversion.png" alt="Dependency Inversion" height="350"/>
 
+## Object Relationships
+<img src="./files/object_relationships.png" alt="Object Relationships" height="450"/>

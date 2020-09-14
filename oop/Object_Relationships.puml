@@ -1,0 +1,41 @@
+@startuml
+title Object Relationships
+
+class Person {
+  -name: String
+  -age: int
+}
+
+class Company {
+    -name: String
+    -drivers: Driver[]
+}
+
+class Driver {
+    -cars: Car[]
+    +drive()
+}
+
+class Car {
+    -model: String
+    -engine: Engine
+}
+
+class Engine {
+    -type: String
+    + start()
+}
+
+' INHERITANCE
+Driver -left-|> Person : <b>is-a</b> \n INHERITANCE \n Driver <b>is a</b> Person
+
+' AGGREGATION
+Company o-left- Driver : <b>weak link</b> \n AGGREGATION \n Company <b>employs</b> Driver
+
+' ASSOCIATION
+Driver -down-> Car : <b>weak link</b> \n ASSOCIATION \n Driver <b>owns</b> Car
+
+' COMPOSITION
+Car *-down- Engine : <b>strong link</b> \n COMPOSITION \n Car <b>has</b> Engine
+
+@enduml

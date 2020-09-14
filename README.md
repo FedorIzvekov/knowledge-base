@@ -8,6 +8,7 @@ This repository contains UML diagrams on the following topics:
     * [Liskov Substitution](./oop/README.md#liskov-substitution)
     * [Interface Segregation](./oop/README.md#interface-segregation)
     * [Dependency Inversion](./oop/README.md#dependency-inversion)
+  * [Object Relationships](./oop/README.md#object-relationships)
 
 * [Networks](./networks/README.md#networks)
   * [OSI vs TCP/IP Model Mapping](./networks/README.md#osi-vs-tcpip-model-mapping)
