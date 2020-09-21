@@ -1,0 +1,58 @@
+@startuml
+
+title Exceptions Hierarchy
+
+skinparam class {
+BackgroundColor<<error>> tomato
+BackgroundColor<<unchecked>> orange
+BackgroundColor<<checked>> palegreen
+}
+
+class Throwable
+
+class Error <<error>>
+class ThreadDeath <<error>>
+class LinkageError <<error>>
+class AssertionError <<error>>
+class VirtualMachineError <<error>>
+class StackOverflowError <<error>>
+class OutOfMemoryError <<error>>
+
+class Exception<<checked>>
+class IOException<<checked>>
+class InterruptedException<<checked>>
+class NamingException<<checked>>
+class ReflectiveOperationException<<checked>>
+class SQLException<<checked>>
+
+class RuntimeException<<unchecked>>
+class NullPointerException<<unchecked>>
+class ClassCastException<<unchecked>>
+class IndexOutOfBoundsException<<unchecked>>
+class ArithmeticException<<unchecked>>
+
+'Checked
+Exception -right-|> Throwable
+IOException -down-|> Exception
+InterruptedException -up-|> Exception
+NamingException -down-|> Exception
+ReflectiveOperationException -right-|> Exception
+SQLException -down-|> Exception
+
+'Unchecked
+RuntimeException -up--|> Exception
+NullPointerException -up-|> RuntimeException
+ClassCastException -up-|> RuntimeException
+IndexOutOfBoundsException -left-|> RuntimeException
+ArithmeticException -up-|> RuntimeException
+
+'Error
+Error -left-|> Throwable
+VirtualMachineError -up--|> Error
+StackOverflowError -up-|> VirtualMachineError
+OutOfMemoryError -up-|> VirtualMachineError
+ThreadDeath -up-|> Error
+LinkageError -down-|> Error
+AssertionError -left-|> Error
+
+@enduml

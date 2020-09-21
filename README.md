@@ -12,3 +12,9 @@ This repository contains UML diagrams on the following topics:
 
 * [Networks](./networks/README.md#networks)
   * [OSI vs TCP/IP Model Mapping](./networks/README.md#osi-vs-tcpip-model-mapping)
+
+* [Java](./java/README.md#java)
+  * [Class Object](./java/README.md#class-object)
+  * [Exceptions Hierarchy](./java/README.md#exceptions-hierarchy)
+  * [Collections Hierarchy](./java/README.md#collections-hierarchy)
+  * [Maps Hierarchy](./java/README.md#maps-hierarchy)
