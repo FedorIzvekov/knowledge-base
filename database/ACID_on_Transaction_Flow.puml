@@ -1,0 +1,53 @@
+@startuml ACID_Principles
+
+title ACID on Transaction Flow
+
+actor Client
+participant "Transaction Manager" as TM
+participant "DB Engine" as DB
+participant "Storage" as Disk
+participant "Constraint Checker" as CC
+
+Client -> TM : start Transaction
+note left : ACID: <b>Atomicity</b> begins tracking
+
+TM -> DB : acquire Locks
+note left: ACID: <b>Isolation</b> start locks
+
+TM -> DB : execute Queries
+DB -> CC : validate Constraints
+note left : ACID: <b>Consistency</b> ensures valid state
+
+... if ...
+
+CC --> DB : validation failed
+note left #tomato : ACID: <b>Consistency</b> failed
+DB --> TM : notify failure
+TM -> DB : rollback
+note left #tomato : ACID: <b>Atomicity</b> discard changes
+TM --> Client : Transaction failed
+
+... else ...
+
+CC --> DB : validation passed
+note left #palegreen: ACID: <b>Consistency</b> success
+
+DB --> TM : notify success
+
+group#palegreen commit
+TM -> Disk : write WAL (Write-Ahead Logging)
+note left : ACID: <b>Durability</b> ensures recovery
+Disk --> TM : acknowledgement (fsync complete)
+TM -> DB : apply changes
+note left #palegreen : ACID: <b>Atomicity</b> finalizes
+TM --> Client : Transaction committed
+end
+
+......
+
+DB -> Disk : async write to data files
+note left : ACID: <b>Durability</b> guaranteed by WAL
+TM -> DB : release Locks
+note left : ACID: <b>Isolation</b> end locks
+
+@enduml
