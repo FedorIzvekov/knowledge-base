@@ -15,5 +15,6 @@ This repository contains UML diagrams on the following topics:
 
 * [Database](./database/README.md#database)
   * [ACID on Transaction Flow](./database/README.md#acid-on-transaction-flow)
+  * [SQL Isolation Levels](./database/README.md#sql-isolation-levels)
 
 * [Java](./java/README.md#java)
