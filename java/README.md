@@ -2,6 +2,9 @@
 
 # Java
 
+## JVM Memory Model
+<img src="./files/jvm_memory_model.png" alt="JVM Memory Model" height="400"/>
+
 ## Class Object
 
 <img src="./files/object.png" alt="Class Object" height="200"/>

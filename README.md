@@ -8,6 +8,9 @@ This repository contains UML diagrams and table data on the following topics:
 * [Networks](./networks/README.md#networks)
   * [OSI vs TCP/IP Model Mapping](./networks/README.md#osi-vs-tcpip-model-mapping)
 
+* [Java](./java/README.md#java)
+  * [JVM Memory Model](./java/README.md#jvm-memory-model)
+
 * [Database](./database/README.md#database)
   * [ACID on Transaction Flow](./database/README.md#acid-on-transaction-flow)
   * [SQL Isolation Levels](./database/README.md#sql-isolation-levels)
@@ -20,5 +23,3 @@ This repository contains UML diagrams and table data on the following topics:
     * [Interface Segregation](./oop/README.md#interface-segregation)
     * [Dependency Inversion](./oop/README.md#dependency-inversion)
   * [Object Relationships](./oop/README.md#object-relationships)
-
-* [Java](./java/README.md#java)

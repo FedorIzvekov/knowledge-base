@@ -1,0 +1,79 @@
+@startuml
+
+title JVM Memory Model
+
+frame "Heap Memory (-Xmx) " as HEAP #fffee7 {
+
+    frame "Young Generation " as YOUNG_GEN #fff466 {
+        [<b>Eden Space</b>] as EDEN #ffc499
+        [<b>Survivor Space 0</b>] as S0 #ffa766
+        [<b>Survivor Space 1</b>] as S1 #ff8933
+    }
+
+    [<b>Old Space</b>] as OLD #ff6b00
+    [<b>String Pool</b>] as STRING_POOL #ff6b00
+}
+
+frame "Stack " as STACK #d3b3ff {
+    [<b>Thread Stack n</b>] as THREAD_STACK #a766ff
+}
+
+frame "Native Memory (Off-Heap) " as NATIVE_MEMORY #e5fffd {
+    [<b>Metaspace</b>] as METASPACE #00b44c
+    [<b>JNI Memory</b>] as JNI #0094ff
+    [<b>JIT Code Cache</b>] as JIT_CODE #ff0014
+    [<b>Direct ByteBuffers</b>] as BYTE_BUFFERS #fff466
+}
+
+frame "JVM Internals " as JVM #f6ffea {
+    [ClassLoader] as CLASSLOADER #00b44c
+    [Threads] as THREADS #a766ff
+    [GC Roots] as ROOTS #b3000e
+    [Garbage Collector] as GC #ff6672
+    [Native Libraries] as LIBRARIES #0094ff
+    [JIT Compiler] as JIT #ff0014
+    [NIO] as NIO #fff466
+}
+
+' Heap Memory
+EDEN -right-> S0 : minor GC
+S0 <-right-> S1 : minor GC
+S0 -down-> OLD : stop the world GC
+S1 -down-> OLD : stop the world GC
+
+' Native Memory (Off-Heap)
+CLASSLOADER -up[dashed]--> HEAP
+CLASSLOADER -up[dashed]--> METASPACE
+THREADS -up[dashed]-> THREAD_STACK #a766ff
+
+ROOTS -up[dashed]-> THREAD_STACK #b3000e : local vars in stacks
+ROOTS -up[dashed]-> HEAP #b3000e : reachable objects
+ROOTS -up[dashed]-> JNI #b3000e : JNI refs
+ROOTS -right[dashed]-> CLASSLOADER #b3000e
+
+GC -up[dashed]-> HEAP : manages
+
+LIBRARIES -up[dashed]-> JNI
+JIT -up[dashed]-> JIT_CODE
+NIO -up[dashed]-> BYTE_BUFFERS
+
+'positions
+S0 -down[hidden]- STRING_POOL
+S1 -down[hidden]- OLD
+OLD -left[hidden]- STRING_POOL
+S1 -right[hidden]- THREAD_STACK
+THREAD_STACK -right[hidden]- METASPACE
+METASPACE -right[hidden]- JNI
+JNI -right[hidden]- JIT_CODE
+JIT_CODE -right[hidden]- BYTE_BUFFERS
+
+'ClassLoader → Threads → GC Roots → GC → (JIT, NIO, JNI).
+OLD -right[hidden]- GC
+GC -right[hidden]- THREADS
+S1 -right[hidden]- THREADS
+THREADS -right[hidden]- ROOTS
+CLASSLOADER -right[hidden]- LIBRARIES
+LIBRARIES -right[hidden]- JIT
+JIT -right[hidden]- NIO
+
+@enduml
