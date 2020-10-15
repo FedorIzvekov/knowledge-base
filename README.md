@@ -4,6 +4,7 @@ This repository contains UML diagrams and table data on the following topics:
 
 * [Performance](./performance/README.md#performance)
   * [Latency Comparison Numbers](./performance/README.md#latency-comparison-numbers)
+  * [Data Structures Time and Space Complexity](./performance/README.md#data-structures-time-and-space-complexity)
 
 * [Networks](./networks/README.md#networks)
   * [OSI vs TCP/IP Model Mapping](./networks/README.md#osi-vs-tcpip-model-mapping)

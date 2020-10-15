@@ -27,3 +27,21 @@
 | Round trip Western Europe -> US Central         | 120 000 000 | 120 000 |     120     |
 | Round trip US California -> Netherlands         | 150 000 000 | 150 000 |     150     |
 | Round trip Western Europe -> Singapore          | 180 000 000 | 180 000 |     180     |
+
+## Data Structures Time and Space Complexity
+
+| **Data Structure**                       |              **Average Time Access**               |    **Average Time Search**    |  **Average Time Insertion**   |   **Average Time Deletion**   |     **Worst Time Access**     |     **Worst Time Search**     |   **Worst Time Insertion**    |    **Worst Time Deletion**    |  **Worst Space Complexity**   |
+|:-----------------------------------------|:--------------------------------------------------:|:-----------------------------:|:-----------------------------:|:-----------------------------:|:-----------------------------:|:-----------------------------:|:-----------------------------:|:-----------------------------:|:-----------------------------:|
+| **Array / Array List**                   |             <instant> Θ(1) </instant>              | <efficient> Θ(n) </efficient> | <efficient> Θ(n) </efficient> | <efficient> Θ(n) </efficient> |   <instant> O(1) </instant>   | <efficient> O(n) </efficient> | <efficient> O(n) </efficient> | <efficient> O(n) </efficient> | <efficient> O(n) </efficient> |
+| **Linked List**                          |           <efficient> Θ(n) </efficient>            | <efficient> Θ(n) </efficient> |   <instant> Θ(1) </instant>   |   <instant> Θ(1) </instant>   | <efficient> O(n) </efficient> | <efficient> O(n) </efficient> |   <instant> O(1) </instant>   |   <instant> O(1) </instant>   | <efficient> O(n) </efficient> |
+| **Hash Table / Hash Map / Hash Set**     |                        N/A                         |   <instant> Θ(1) </instant>   |   <instant> Θ(1) </instant>   |   <instant> Θ(1) </instant>   |              N/A              | <efficient> O(n) </efficient> | <efficient> O(n) </efficient> | <efficient> O(n) </efficient> | <efficient> O(n) </efficient> |
+| **Red-Black Tree / Tree Map / Tree Set** |                        N/A                         |    <fast> Θ(log n) </fast>    |    <fast> Θ(log n) </fast>    |    <fast> Θ(log n) </fast>    |              N/A              |    <fast> O(log n) </fast>    |    <fast> O(log n) </fast>    |    <fast> O(log n) </fast>    | <efficient> O(n) </efficient> |
+| **Queue**                                | <efficient> Θ(n)</efficient><br>* no random access | <efficient> Θ(n) </efficient> |   <instant> Θ(1) </instant>   |   <instant> Θ(1) </instant>   | <efficient> O(n) </efficient> | <efficient> O(n) </efficient> |   <instant> O(1) </instant>   |   <instant> O(1) </instant>   | <efficient> O(n) </efficient> |
+| **Stack / Deque**                        |             <instant> Θ(1) </instant>              | <efficient> Θ(n) </efficient> |   <instant> Θ(1) </instant>   |   <instant> Θ(1) </instant>   |   <instant> O(1) </instant>   | <efficient> O(n) </efficient> |   <instant> O(1) </instant>   |   <instant> O(1) </instant>   | <efficient> O(n) </efficient> |
+
+<style>
+instant{background:green;color:black;}
+fast{background:lightGreen;color:black;}
+efficient{background:yellow;color:black;}
+normal{background:orange;color:black;}
+</style>
