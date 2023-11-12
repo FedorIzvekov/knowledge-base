@@ -1,34 +1,187 @@
 @startuml
 
-title Collections Hierarchy
+title Java Collections Framework - Java 21
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
 
 skinparam class {
-BackgroundColor<<set>> strategy
-BackgroundColor<<list>> tomato
+  BackgroundColor<<set>> strategy
+  BackgroundColor<<list>> tomato
+  BackgroundColor<<queue>> lightblue
+  BackgroundColor<<heap>> plum
+  BackgroundColor<<root>> lightgray
 }
 
-interface Iterable #technology
-interface Collection #technology extends Iterable
+interface Iterable<E> <<root>> #technology
+interface Collection<E> <<root>> #technology
+Iterable <|-down- Collection
 
-abstract class AbstractCollection #motivation implements Collection
+interface Queue<E> <<queue>> #technology
+interface SequencedCollection<E> <<root>> #technology
+interface Set<E> <<set>> #technology
 
-interface Set <<set>> #technology extends Collection
-abstract class AbstractSet <<set>> #motivation extends AbstractCollection implements Set
-class HashSet <<set>> extends AbstractSet implements Set
-class LinkedHashSet <<set>> extends HashSet implements Set
-interface SortedSet <<set>> #technology extends Set
-interface NavigableSet <<set>> #technology extends SortedSet
-class TreeSet <<set>> extends AbstractSet implements NavigableSet
+Collection <|-down- Queue
+Collection <|-down- SequencedCollection
+Collection <|-down- Set
+Queue -[hidden]right- SequencedCollection
+SequencedCollection -[hidden]right- Set
 
-interface Queue <<queue>> #technology extends Collection
-interface Deque <<queue>> #technology extends Queue
+interface Deque<E> <<queue>> #technology
+interface List<E> <<list>> #technology
+interface SequencedSet<E> <<set>> #technology
+interface SortedSet<E> <<set>> #technology
+interface NavigableSet<E> <<set>> #technology
 
-interface List <<list>> #technology extends Collection
-abstract class AbstractList <<list>> #motivation extends AbstractCollection implements List
-abstract class AbstractSequentialList <<list>> #motivation extends AbstractList
-class LinkedList <<list>> #orange extends AbstractSequentialList implements List, Deque
-class ArrayList <<list>> extends AbstractList implements List
-class Vector <<list>> extends AbstractList implements List
-class Stack <<list>> extends Vector
+Queue <|--- Deque
+SequencedCollection <|--- Deque
+SequencedCollection <|--- List
+Set <|---down- SequencedSet
+SequencedCollection <|--down- SequencedSet
+SequencedSet <|-right- SortedSet
+SortedSet <|-right- NavigableSet
+Deque -[hidden]right- List
+List -[hidden]right- SequencedSet
+
+together {
+  class PriorityQueue<E> <<heap>>
+  class ArrayDeque<E> <<queue>>
+  class ArrayList<E> <<list>>
+  class LinkedList<E> <<list>>
+  class HashSet<E> <<set>>
+  class LinkedHashSet<E> <<set>>
+  class TreeSet<E> <<set>>
+  class EnumSet<E> <<set>>
+  class CopyOnWriteArrayList<E> <<list>>
+  class CopyOnWriteArraySet<E> <<set>>
+}
+
+Deque <|... LinkedList
+List <|... ArrayList
+List <|... LinkedList
+List <|... CopyOnWriteArrayList
+Deque <|... ArrayDeque
+Queue <|... PriorityQueue
+Set <|... HashSet
+SequencedSet <|... LinkedHashSet
+NavigableSet <|... TreeSet
+Set <|... EnumSet
+Set <|... CopyOnWriteArraySet
+
+PriorityQueue -[hidden]right- ArrayDeque
+ArrayDeque -[hidden]right- LinkedList
+CopyOnWriteArrayList -[hidden]right- LinkedHashSet
+
+
+note left of SequencedCollection
+  <b>Java 21</b>:
+  has defined encounter order
+
+  Important methods:
+  - getFirst()
+  - getLast()
+  - addFirst()
+  - addLast()
+  - removeFirst()
+  - removeLast()
+  - reversed()
+end note
+
+
+note left of Queue
+  Usually FIFO abstraction
+
+  Main methods:
+  - offer()
+  - poll()
+  - peek()
+end note
+
+
+note right of NavigableSet
+  SortedSet with navigation methods
+
+  Examples:
+  - lower()
+  - floor()
+  - ceiling()
+  - higher()
+end note
+
+
+note bottom of ArrayList
+  Resizable array
+
+  Strengths:
+  - fast random access
+  - compact memory layout
+
+  Weakness:
+  - insert/remove in middle is costly
+end note
+
+
+note bottom of LinkedList
+  Doubly-linked list
+
+  Usually not faster than ArrayList
+  for common list operations
+end note
+
+
+note bottom of CopyOnWriteArrayList
+  Thread-safe list
+end note
+
+
+note top of ArrayDeque
+  Resizable-array Deque
+
+  Usually preferred for:
+  - stack usage
+  - queue usage
+end note
+
+
+note top of PriorityQueue
+  Priority heap
+
+  Orders elements by natural order
+
+  Important:
+  iteration order is not sorted order
+end note
+
+
+note bottom of HashSet
+  Hash table based Set
+
+  No guaranteed order
+end note
+
+
+note bottom of LinkedHashSet
+  Has defined encounter order
+
+  Java 21:
+  implements SequencedSet
+end note
+
+
+note bottom of EnumSet
+  Specialized for enum types
+
+  Very compact and fast
+end note
+
+
+note bottom of CopyOnWriteArraySet
+  Thread-safe Set
+end note
+
+
+note right of TreeSet
+  Sorted by natural order
+end note
 
 @enduml
