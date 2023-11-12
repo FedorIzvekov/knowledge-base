@@ -1,20 +1,196 @@
 @startuml
 
-title Maps Hierarchy
+title Java Maps Hierarchy - Java 21
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
 
 skinparam class {
-    BackgroundColor orange
+  BackgroundColor<<root>> lightgray
+  BackgroundColor<<hash>> orange
+  BackgroundColor<<sequenced>> gold
+  BackgroundColor<<sorted>> plum
+  BackgroundColor<<concurrent>> wheat
+  BackgroundColor<<special>> palegreen
+  BackgroundColor<<legacy>> lightgray
 }
 
-interface Map<K, V> #Technology
-abstract class Dictionary<K, V> #Motivation
-abstract class AbstractMap<K, V> #Motivation implements Map
+interface Map<K,V> <<root>> #technology
+interface SequencedMap<K,V> <<sequenced>> #technology
+interface SortedMap<K,V> <<sorted>> #technology
 
-interface SortedMap<K, V> #Technology extends Map
-interface NavigableMap<K, V> #Technology extends SortedMap
+Map <|-down- SequencedMap
+Map <|-down- ConcurrentMap
+SequencedMap <|-down- SortedMap
+SortedMap <|-down- NavigableMap
 
-class Hashtable<K, V> extends Dictionary implements Map
-class TreeMap<K, V> extends AbstractMap implements NavigableMap
-class HashMap<K, V> extends AbstractMap implements Map
-class LinkedHashMap<K, V> extends HashMap implements Map
+together {
+    interface ConcurrentMap<K,V> <<concurrent>> #technology
+    interface ConcurrentNavigableMap<K,V> <<concurrent>> #technology
+    interface NavigableMap<K,V> <<sorted>> #technology
+}
+
+ConcurrentMap <|-right- ConcurrentNavigableMap
+NavigableMap <|-right- ConcurrentNavigableMap
+
+ConcurrentMap <|..down. ConcurrentHashMap
+ConcurrentNavigableMap <|..down. ConcurrentSkipListMap
+Map <|..down. HashMap
+SequencedMap <|..down. LinkedHashMap
+HashMap<|-left- LinkedHashMap
+NavigableMap <|..down. TreeMap
+Map <|...down. EnumMap
+Map <|...down. WeakHashMap
+Map <|...down. IdentityHashMap
+
+together {
+  class HashMap<K,V> <<hash>>
+  class LinkedHashMap<K,V> <<sequenced>>
+  class TreeMap<K,V> <<sorted>>
+  class EnumMap<K,V> <<special>>
+  class WeakHashMap<K,V> <<special>>
+  class IdentityHashMap<K,V> <<special>>
+  class ConcurrentHashMap<K,V> <<concurrent>>
+  class ConcurrentSkipListMap<K,V> <<concurrent>>
+}
+
+ConcurrentHashMap -[hidden]right- ConcurrentSkipListMap
+ConcurrentSkipListMap -[hidden]right- TreeMap
+TreeMap -[hidden]right- LinkedHashMap
+HashMap -[hidden]right- EnumMap
+EnumMap -[hidden]right- WeakHashMap
+WeakHashMap -[hidden]right- IdentityHashMap
+
+
+note left of SequencedMap
+  <b>Java 21</b>:
+  Map with defined encounter order
+
+  Important methods:
+  - firstEntry()
+  - lastEntry()
+  - pollFirstEntry()
+  - pollLastEntry()
+  - putFirst()
+  - putLast()
+  - reversed()
+
+  Sequenced views:
+  - sequencedKeySet()
+  - sequencedValues()
+  - sequencedEntrySet()
+end note
+
+
+note right of SortedMap
+  Map sorted by keys
+
+  Sorted by natural order
+
+  Important methods:
+  - firstKey()
+  - lastKey()
+  - headMap()
+  - tailMap()
+  - subMap()
+end note
+
+note right of NavigableMap
+  SortedMap with navigation methods
+
+  Examples:
+  - lowerEntry()
+  - floorEntry()
+  - ceilingEntry()
+  - higherEntry()
+  - descendingMap()
+end note
+
+
+note top of ConcurrentNavigableMap
+  Concurrent + NavigableMap
+
+  Used for:
+  - sorted concurrent maps
+  - range queries
+  - navigation by keys
+end note
+
+
+note bottom of HashMap
+  Common default choice
+
+  Allows:
+  - one null key
+  - null values
+
+  No guaranteed order
+end note
+
+
+note bottom of LinkedHashMap
+  Has defined encounter order
+
+  Usually: insertion order
+
+  Can also support:
+  - access order
+
+  Useful for LRU-like caches
+end note
+
+
+note bottom of TreeMap
+  Red-Black tree based Map
+
+  Sorted by keys natural order
+
+  Cost O(log n)
+end note
+
+
+note bottom of EnumMap
+  Specialized Map for enum keys
+
+  Very compact and fast
+
+  Keys must be from one enum type
+end note
+
+
+note bottom of WeakHashMap
+  Entry can disappear when key
+  is no longer strongly reachable
+
+  Useful for cache-like structures
+end note
+
+
+note bottom of IdentityHashMap
+  Uses reference equality
+
+  Compares keys by ==
+  Not by equals()
+
+  Rare special-purpose Map
+end note
+
+
+note bottom of ConcurrentHashMap
+  Scalable thread-safe hash Map
+
+  Usually preferred over
+  synchronizedMap(new HashMap<>())
+
+end note
+
+
+note bottom of ConcurrentSkipListMap
+  Concurrent sorted Map
+
+  Skip-list based
+
+  Cost expected O(log n)
+end note
+
 @enduml
